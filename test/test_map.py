@@ -1,4 +1,5 @@
 import pytest
+
 from ex49.map import Map
 from ex49.scene import Scene
 
@@ -11,7 +12,7 @@ def test_map____init___success(map):
 
 def test_map___init___fail():
     with pytest.raises(ValueError) as e:
-        Map([],[])
+        Map([], [])
         assert str(e.value) == "Arguments must be dictionaries."
 
 
@@ -37,11 +38,10 @@ def test_map_adjacent_scenes_setter_fail(map):
         assert str(e.value) == "Adjacent scenes must be a dictionary."
 
 
-@pytest.mark.parametrize("scene,adjacents", [
-    ("atrium", ["green"]),
-    ("green", ["finished", "atrium"]),
-    ("red", None)
-])
+@pytest.mark.parametrize(
+    "scene,adjacents",
+    [("atrium", ["green"]), ("green", ["finished", "atrium"]), ("red", None)],
+)
 def test_get_next_scenes(scene, adjacents, map):
     assert map.get_next_scenes(scene) == adjacents
 

@@ -4,7 +4,7 @@ class Engine(object):
         self.player = player
         self.scene_map = scene_map
         self.starting_scene_name = starting_scene_name
-    
+
     def play(self):
         current_scene_name = self.starting_scene_name
         current_scene = self.scene_map.get_scene(current_scene_name)

@@ -10,4 +10,3 @@ def filtered_input(values=None, casting_func=str, prompt="> "):
         except ValueError:
             print("Invalid input. Try again.")
             continue
-

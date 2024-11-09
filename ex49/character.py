@@ -8,20 +8,20 @@ class Character(object):
         self.name = name
         self._hp = hp
         self.max_attack = max_attack
-    
+
     @property
     def hp(self):
         """Getter for hp."""
         return self._hp
-    
+
     @hp.setter
     def hp(self, value):
         """Setter for hp with validation to prevent negative values"""
         self._hp = max(0, value)
-    
+
     def is_alive(self):
         return self.hp > 0
-    
+
     def attack(self, opponent):
         """Character initiates attack."""
         damage = random.randint(0, self.max_attack)
@@ -30,9 +30,9 @@ class Character(object):
             print(f"The attack on {opponent.name} has been repelled.")
         else:
             opponent.hp -= damage
-        
+
         print(f"{self.name} attacks {opponent.name} for {damage}")
-    
+
     def __str__(self):
         return f"{self.name}: {self.hp}"
 
@@ -45,7 +45,7 @@ class Player(Character):
         max_attack = WEAPONS[self.weapon]
 
         super().__init__(name, hp, max_attack)
-    
+
     def new_weapon(self, weapon_string):
         try:
             if weapon_string in WEAPONS.keys():

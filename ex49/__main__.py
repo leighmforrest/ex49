@@ -5,11 +5,12 @@ def init_player():
     while True:
         print("Please enter your player's name.")
         player_name = input("> ")
-        
+
         if player_name:
             player = Player(player_name)
             return player
-        else: continue
+        else:
+            continue
 
 
 if __name__ == "__main__":

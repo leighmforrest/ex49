@@ -10,6 +10,7 @@ class Green(Scene):
     def enter(self, player):
         return "finished"
 
+
 class Finished(Scene):
     def enter(self, player):
         print("YOU WIN")
@@ -18,10 +19,7 @@ class Finished(Scene):
 
 SCENES = {"atrium": Atrium(), "green": Green(), "finished": Finished()}
 
-ADJACENT_SCENES = {
-    "atrium": ["green"],
-    "green": ["finished", "atrium"]
-}
+ADJACENT_SCENES = {"atrium": ["green"], "green": ["finished", "atrium"]}
 
 
 BAD_ADJACENT_SCENES = {

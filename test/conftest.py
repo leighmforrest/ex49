@@ -1,9 +1,11 @@
+from test.scenes_for_testing import (ADJACENT_SCENES, BAD_ADJACENT_SCENES,
+                                     SCENES)
+
 import pytest
 
 from ex49.character import Character, Player
-from ex49.map import Map
 from ex49.engine import Engine
-from test.scenes_for_testing import SCENES, ADJACENT_SCENES, BAD_ADJACENT_SCENES
+from ex49.map import Map
 
 
 @pytest.fixture
