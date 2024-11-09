@@ -1,4 +1,3 @@
-import pytest
 from ex49.filtered_input import filtered_input
 
 
