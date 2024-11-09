@@ -41,6 +41,10 @@ def test_character_direct_hit(character, opponent, capsys):
     f"{character.name} attacks {opponent.name} for" in captured.out
 
 
+def test___str__self(character):
+    assert str(character) == f"{character.name}: {character.hp}"
+
+
 def test_player(player):
     assert player is not None
     assert player.name == "Link"

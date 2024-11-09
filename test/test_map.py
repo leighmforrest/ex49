@@ -22,7 +22,7 @@ def test_map_scenes_setter(map):
 
 def test_map_scenes_setter_fail(map):
     with pytest.raises(ValueError) as e:
-        map.adjacent_scenes = []
+        map.scenes = []
         assert str(e.value) == "Scenes must be a dictionary."
 
 
