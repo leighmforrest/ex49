@@ -1,6 +1,7 @@
 import random
 
 WEAPONS = {"dagger": 9, "sword": 20}
+ITEMS = ["elixir", "golden key", "grimoire"]
 
 
 class Character(object):
@@ -30,8 +31,7 @@ class Character(object):
             print(f"The attack on {opponent.name} has been repelled.")
         else:
             opponent.hp -= damage
-
-        print(f"{self.name} attacks {opponent.name} for {damage}")
+            print(f"{self.name} attacks {opponent.name} for {damage}")
 
     def __str__(self):
         return f"{self.name}: {self.hp}"
@@ -55,3 +55,15 @@ class Player(Character):
                 raise KeyError("Weapon not found")
         except KeyError as e:
             print(e)
+    
+    def new_item(self, item_string):
+        try:
+            if item_string in ITEMS:
+                self.inventory.append(item_string)
+            else: raise ValueError("Item not found")
+        except ValueError as e:
+            print(e)
+    
+    def use_item(self, item_name):
+        if item_name in self.inventory:
+            self.inventory.remove(item_name)
