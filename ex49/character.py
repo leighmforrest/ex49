@@ -1,7 +1,7 @@
 import random
 
 WEAPONS = {"dagger": 9, "sword": 20}
-ITEMS = ["elixir", "golden key", "grimoire"]
+ITEMS = ["elixir", "golden key", "grimoire", "stink_bomb"]
 
 
 class Character(object):
