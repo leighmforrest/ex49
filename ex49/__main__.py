@@ -1,7 +1,7 @@
 from ex49.character import Player
-from ex49.scenes import GAME_ROOMS, ROOM_ADJACENCY
 from ex49.engine import Engine
 from ex49.map import Map
+from ex49.scenes import GAME_ROOMS, ROOM_ADJACENCY
 
 
 def init_player():
@@ -17,9 +17,11 @@ def init_player():
 
 
 if __name__ == "__main__":
-    print("Welcome to Monster Maze")
+    print("Welcome to Dark Castle")
+
     player = init_player()
     print(player)
+    player.new_item("golden_key")
 
     map = Map(GAME_ROOMS, ROOM_ADJACENCY)
     engine = Engine(player, map, "spider_room")

@@ -1,23 +1,26 @@
 import random
 
-from ex49.scene import Scene
 from ex49.character import Character
-from ex49.utilities import filtered_input, death
+from ex49.scene import Scene
+from ex49.utilities import death, filtered_input
+from ex49.scenes.dialogue import DIALOGUE
 
 
 class DukesChamber1(Scene):
+    dialogue = DIALOGUE["dukes_chamber_1"]
+
     def enter(self, player):
-        print("DUKES' CHAMBER")
+        print(self.dialogue["description"])
         # array of knights
         knights = [Character(f"Knight {i}", 7, 7) for i in range(6)]
-        elixir = True 
+        elixir = True
 
         while knights:
             # knight always attacks
             knights[0].attack(player)
             if not player.is_alive():
-                death("Your head has been sliced by the knight's halberd.")
-            
+                death(self.dialogue["death"])
+
             print("What do you do?")
             move = filtered_input(["attack", "pass"])
 
@@ -30,11 +33,10 @@ class DukesChamber1(Scene):
             if move == "pass":
                 continue
 
-
         while True:
             if elixir:
                 print("There is a bottle of elixir at your foot.")
-            
+
             print("What do you do now?")
             move = filtered_input(["take elixir", "advance"])
 
@@ -46,12 +48,13 @@ class DukesChamber1(Scene):
                     elixir = False
                 else:
                     print("You already have the elixir.")
-        
 
 
 class DukesChamber2(Scene):
+    dialogue = DIALOGUE["dukes_chamber_2"]
+
     def enter(self, player):
-        print("DUKE IS IN THE HOUSE!")
+        print(self.dialogue["description"])
 
         duke = Character("The Duke", 20, 10)
         user_inputs = ["drink elixir", "attack", "pass"]
@@ -61,26 +64,26 @@ class DukesChamber2(Scene):
             # Duke attacks first
             duke.attack(player)
             if not player.is_alive():
-                death("You head has been sliced by the giant axe.")
-            
+                death(self.dialogue["death"])
+
             print("What do you do?")
             move = filtered_input(user_inputs)
 
-            if "drink elixir":
+            if move == "drink elixir":
                 if "elixir" in player.inventory:
                     print("You have topped up your stamina.\n")
                     player.hp = 50
                     player.use_item("elixir")
-                elif "attack":
-                    player.attack(duke)
-                    if not duke.is_alive():
-                        print(f"{duke.name} has been defeated.")
-                        break
-                    
-                    print(f"{player.name} stamina is {player.hp}")
-                elif "pass":
-                    continue
-            
+            elif move == "attack":
+                player.attack(duke)
+                if not duke.is_alive():
+                    print(f"{duke.name} has been defeated.")
+                    break
+
+                print(f"{player.name} stamina is {player.hp}")
+            elif move == "pass":
+                continue
+
         while True:
             if golden_key:
                 print("The golden key is on the marble floor.")
@@ -94,34 +97,43 @@ class DukesChamber2(Scene):
                 else:
                     print("You have the golden key")
             elif move == "advance":
-                return "treasure_room"
+                return "spider_room"
             else:
                 continue
 
 
 class SpiderRoom(Scene):
     spiders = [
-            Character("Spider 1", 7, 7),
-            Character("Spider 2", 6, 6),
-            Character("Spider 3", 5, 5),
-            Character("Spider 4", 5, 5),
-            Character("Spider 5", 4, 4),
-            Character("Spider 6", 4, 4),
-            Character("Spider 7", 4, 4),
-        ]
+        Character("Spider 1", 7, 7),
+        Character("Spider 2", 6, 6),
+        Character("Spider 3", 5, 5),
+        Character("Spider 4", 5, 5),
+        Character("Spider 5", 4, 4),
+        Character("Spider 6", 4, 4),
+        Character("Spider 7", 4, 4),
+    ]
     stink_bomb = True
+    dialogue = DIALOGUE["spider_room"]
 
     def enter(self, player):
-        print("SPIDER ROOM")
+        print(self.dialogue["description"])
 
         while self.spiders:
             random.shuffle(self.spiders)
-            print(f"There are {len(self.spiders)} spiders in the room.")
+
+            n = len(self.spiders)
+
+            if n > 1:
+                spider_count = f"There are {n} spiders in the room."
+            else:
+                spider_count = "There is one spider in the room."
+            print(spider_count)
+
             # top spider always attacks
             self.spiders[0].attack(player)
             if not player.is_alive():
-                death("Spider has sucked your gizzards through its chelicerae.")
-            
+                death(self.dialogue["death"])
+
             print("What do you do?")
             move = filtered_input(["attack", "pass"])
 
@@ -131,39 +143,41 @@ class SpiderRoom(Scene):
                     print(f"{self.spiders[0].name} has been defeated.")
                     self.spiders.pop(0)
                 print(f"{player.name} stamina is {player.hp}")
-            if move == "pass":
+            elif move == "pass":
                 continue
-        
-        print("The spiders have been defated. Two doors appear ahead.")
 
+        # After defeating all spiders
         while True:
             if self.stink_bomb:
-                print("The stink bomb appears where the spiders once stood.")
-            
+                print("There is a stink bomb on the floor.")
+
             print("What do you do now?")
             move = filtered_input(["take stink bomb", "door one", "door two"])
 
-            if move == "door one":
-                death("Large boulders roll, crushing you underneath.")
-            elif move == "door two":
-                return "wizards_lab"
-            elif move == "take stink bomb":
+            if move == "take stink bomb":
                 if self.stink_bomb:
                     player.new_item("stink_bomb")
                     self.stink_bomb = False
                 else:
                     print("You already have the stink bomb.")
-    
+            elif move == "door one":
+                return "sphinx"
+            elif move == "door two":
+                return "wizards_lab"
+            else:
+                print("Invalid choice. Try again.")
+
 
 class WizardsLab(Scene):
     wizard_bombed = False
     grimoire = True
+    dialogue = DIALOGUE["wizards_lab"]
 
     def enter(self, player):
         choices_1 = ["attack", "throw bomb", "go back"]
-        choices_2 = ["take grimoire", "open_door", "go back"]
+        choices_2 = ["take grimoire", "open door", "go back"]
 
-        print("WIZARD'S LAB")
+        print(self.dialogue["description"])
 
         while True:
             print("What action will you take?")
@@ -173,11 +187,11 @@ class WizardsLab(Scene):
                 if self.wizard_bombed:
                     print("There is no wizard to attack.")
                 else:
-                    death("Lightning bolts strike upon your head.")
+                    death(self.dialogue["death"])
             if move == "throw bomb":
                 if "stink_bomb" in player.inventory and not self.wizard_bombed:
                     self.wizard_bombed = True
-                    print("The wizard evacuates the laboratory.")
+                    print(self.dialogue["bomb_throw"])
                     break
                 else:
                     print("Cannot stink bomb the lab.")
@@ -191,9 +205,7 @@ class WizardsLab(Scene):
             print("What do you do now?")
             move = filtered_input(choices_2)
 
-            if move == "open door":
-                death("Large boulders roll, crushing you underneath.")
-            elif move == "go back":
+            if move == "go back":
                 return "spider_room"
             elif move == "take grimoire":
                 if self.grimoire:
@@ -201,6 +213,57 @@ class WizardsLab(Scene):
                     self.grimoire = False
                 else:
                     print("You already have the grimoire.")
+            elif move == "open door":
+                if player.weapon == "sword" and "golden key" in player.inventory:
+                    return "treasure_room"
+                else:
+                    print("You must have the sword and the golden key to open the door.")
+
+
+class Sphinx(Scene):
+    solved = False
+    dialogue = DIALOGUE["sphinx"]
+
+    def enter(self, player):
+        max_guesses = 3
+        answer = "time"
+
+        if self.solved:
+            print("You have already solved the riddle.")
+        else:
+            print(self.dialogue["description"])
+            print(self.dialogue["sphinx_talk"])
+
+            for _ in range(3):
+                print("What is your answer?")
+                guess = input("> ").lower()
+                if guess == answer:
+                    self.solved = True
+                    break
+
+            if self.solved:
+                # issue sword
+                player.new_weapon("sword")
+                # issue elixir
+                player.new_item("elixir")
+                
+                print(self.dialogue["riddle_solved"])           
+                
+            else:
+                death(self.dialogue["death"])
+        
+        # If solved, the user must enter go back.
+        print("What is your next move?")
+        filtered_input(["go back"])
+        return "spider_room"
+
+
+class MephistopholesLair(Scene):
+    dialogue = DIALOGUE["mephistopheles_lair"]
+
+    def enter(self, player):
+        print(self.dialogue["description"])
+        return "treasure_room"
 
 
 class TreasureRoom(Scene):

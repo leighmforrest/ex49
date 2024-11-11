@@ -55,15 +55,16 @@ class Player(Character):
                 raise KeyError("Weapon not found")
         except KeyError as e:
             print(e)
-    
+
     def new_item(self, item_string):
         try:
             if item_string in ITEMS:
                 self.inventory.append(item_string)
-            else: raise ValueError("Item not found")
+            else:
+                raise ValueError("Item not found")
         except ValueError as e:
             print(e)
-    
+
     def use_item(self, item_name):
         if item_name in self.inventory:
             self.inventory.remove(item_name)

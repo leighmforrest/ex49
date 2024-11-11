@@ -1,2 +1,2 @@
 [run]
-omit=test/*,ex49/__main__.py
+omit=test/*,ex49/__main__.py,ex49/scenes/*
