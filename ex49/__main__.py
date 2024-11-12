@@ -20,9 +20,7 @@ if __name__ == "__main__":
     print("Welcome to Dark Castle")
 
     player = init_player()
-    print(player)
-    player.new_item("golden_key")
 
     map = Map(GAME_ROOMS, ROOM_ADJACENCY)
-    engine = Engine(player, map, "spider_room")
+    engine = Engine(player, map, "dukes_chamber_1")
     engine.play()

@@ -2,8 +2,8 @@ import random
 
 from ex49.character import Character
 from ex49.scene import Scene
-from ex49.utilities import death, filtered_input
 from ex49.scenes.dialogue import DIALOGUE
+from ex49.utilities import death, filtered_input
 
 
 class DukesChamber1(Scene):
@@ -32,6 +32,8 @@ class DukesChamber1(Scene):
                 print(f"{player.name} stamina is {player.hp}")
             if move == "pass":
                 continue
+
+        print(self.dialogue["victory"])
 
         while True:
             if elixir:
@@ -68,6 +70,7 @@ class DukesChamber2(Scene):
 
             print("What do you do?")
             move = filtered_input(user_inputs)
+            print("")
 
             if move == "drink elixir":
                 if "elixir" in player.inventory:
@@ -83,6 +86,8 @@ class DukesChamber2(Scene):
                 print(f"{player.name} stamina is {player.hp}")
             elif move == "pass":
                 continue
+
+        print(self.dialogue["victory"])
 
         while True:
             if golden_key:
@@ -148,6 +153,7 @@ class SpiderRoom(Scene):
 
         # After defeating all spiders
         while True:
+            print(self.dialogue["victory"])
             if self.stink_bomb:
                 print("There is a stink bomb on the floor.")
 
@@ -179,7 +185,10 @@ class WizardsLab(Scene):
 
         print(self.dialogue["description"])
 
-        while True:
+        if self.wizard_bombed:
+            print(self.dialogue["wizard"])
+
+        while not self.wizard_bombed:
             print("What action will you take?")
             move = filtered_input(choices_1)
 
@@ -191,7 +200,7 @@ class WizardsLab(Scene):
             if move == "throw bomb":
                 if "stink_bomb" in player.inventory and not self.wizard_bombed:
                     self.wizard_bombed = True
-                    print(self.dialogue["bomb_throw"])
+                    print(self.dialogue["victory"])
                     break
                 else:
                     print("Cannot stink bomb the lab.")
@@ -202,6 +211,8 @@ class WizardsLab(Scene):
             if self.grimoire:
                 print("The gilt grimoire is on the stand.")
 
+            print(f"Weapon: {player.weapon}")
+            print(f"Inventory: {player.inventory}")
             print("What do you do now?")
             move = filtered_input(choices_2)
 
@@ -215,9 +226,11 @@ class WizardsLab(Scene):
                     print("You already have the grimoire.")
             elif move == "open door":
                 if player.weapon == "sword" and "golden key" in player.inventory:
-                    return "treasure_room"
+                    return "mephistopholes_lair"
                 else:
-                    print("You must have the sword and the golden key to open the door.")
+                    print(
+                        "You must have the sword and the golden key to open the door."
+                    )
 
 
 class Sphinx(Scene):
@@ -246,12 +259,12 @@ class Sphinx(Scene):
                 player.new_weapon("sword")
                 # issue elixir
                 player.new_item("elixir")
-                
-                print(self.dialogue["riddle_solved"])           
-                
+
+                print(self.dialogue["riddle_solved"])
+
             else:
                 death(self.dialogue["death"])
-        
+
         # If solved, the user must enter go back.
         print("What is your next move?")
         filtered_input(["go back"])
@@ -260,9 +273,38 @@ class Sphinx(Scene):
 
 class MephistopholesLair(Scene):
     dialogue = DIALOGUE["mephistopheles_lair"]
+    mephistopholes = Character("Mephistopholes", 76, 15)
 
     def enter(self, player):
         print(self.dialogue["description"])
+
+        while self.mephistopholes.is_alive():
+            self.mephistopholes.attack(player)
+            if not player.is_alive():
+                death(self.dialogue["death"])
+
+            print("What do you do?")
+            move = filtered_input(["attack", "pass", "drink elixir"])
+
+            if move == "attack":
+                player.attack(self.mephistopholes)
+                if not self.mephistopholes.is_alive():
+                    print(f"{self.mephistopholes.name} has been defeated.")
+
+                print(f"{player.name} stamina is {player.hp}")
+
+            elif move == "drink elixir":
+                if "elixir" in player.inventory:
+                    print("You have topped up your stamina.\n")
+                    player.hp = 50
+                    player.use_item("elixir")
+                else:
+                    print("You do not have elixir.")
+
+            elif move == "pass":
+                continue
+
+        print(self.dialogue["victory"])
         return "treasure_room"
 
 

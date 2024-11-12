@@ -1,12 +1,6 @@
-from ex49.scenes.rooms import (
-    DukesChamber1,
-    DukesChamber2,
-    Sphinx,
-    SpiderRoom,
-    TreasureRoom,
-    WizardsLab,
-    MephistopholesLair
-)
+from ex49.scenes.rooms import (DukesChamber1, DukesChamber2,
+                               MephistopholesLair, Sphinx, SpiderRoom,
+                               TreasureRoom, WizardsLab)
 
 GAME_ROOMS = {
     "dukes_chamber_1": DukesChamber1(),
@@ -23,7 +17,7 @@ ROOM_ADJACENCY = {
     "dukes_chamber_1": ["dukes_chamber_2"],
     "dukes_chamber_2": ["spider_room"],
     "spider_room": ["wizards_lab", "sphinx"],
-    "wizards_lab": ["mephistopholes_liar", "spider_room"],
+    "wizards_lab": ["mephistopholes_lair", "spider_room"],
     "mephistopholes_lair": ["treasure_room"],
     "sphinx": ["spider_room"],
 }
