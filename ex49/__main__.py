@@ -40,5 +40,5 @@ if __name__ == "__main__":
             print("Cheat code is unknown. Start from beginning...\n")
 
     map = Map(GAME_ROOMS, ROOM_ADJACENCY)
-    engine = Engine(player, map, "mephistopheles_lair")
+    engine = Engine(player, map, starting_room)
     engine.play()

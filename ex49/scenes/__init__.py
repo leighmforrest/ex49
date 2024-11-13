@@ -1,6 +1,12 @@
-from ex49.scenes.rooms import (DukesChamber1, DukesChamber2,
-                               MephistopholesLair, Sphinx, SpiderRoom,
-                               TreasureRoom, WizardsLab)
+from ex49.scenes.rooms import (
+    DukesChamber1,
+    DukesChamber2,
+    MephistopholesLair,
+    Sphinx,
+    SpiderRoom,
+    TreasureRoom,
+    WizardsLab,
+)
 
 GAME_ROOMS = {
     "dukes_chamber_1": DukesChamber1(),

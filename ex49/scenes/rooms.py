@@ -187,7 +187,7 @@ class WizardsLab(Scene):
 
         print(self.dialogue["description"])
 
-        if self.wizard_bombed:
+        if not self.wizard_bombed:
             print(self.dialogue["wizard"])
 
         while not self.wizard_bombed:
@@ -213,10 +213,9 @@ class WizardsLab(Scene):
             if self.grimoire:
                 print("The gilt grimoire is on the stand.")
 
-            print(f"Weapon: {player.weapon}")
-            print(f"Inventory: {player.inventory}")
             print("What do you do now?")
             move = filtered_input(choices_2)
+            print("")
 
             if move == "go back":
                 return "spider_room"

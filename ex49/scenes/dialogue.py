@@ -15,9 +15,10 @@ DIALOGUE = {
         "victory": "There are two doors: door one and door two.",
     },
     "wizards_lab": {
-        "description": "WIZARD'S LAB",
-        "wizard": "Ther wizard is behind the oblong lab table",
-        "victory": "The wizard evacuates the laboratory.",
+        "description": "There is a long oblong table with conical flasks and test tubes on the surface. A door with a large keyhole is to the rear.",
+        "wizard": "A wizard with a blue conical hat and a black robe is behind the oblong lab table.",
+        "victory": """A pungent aroma, like rotten eggs fills the room. 
+Black smoke with an amber halo expands from the device. The wizard evacuates the laboratory.""",
         "death": "You head has been sliced by the giant axe.",
     },
     "sphinx": {
