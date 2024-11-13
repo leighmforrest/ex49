@@ -37,7 +37,7 @@ if __name__ == "__main__":
             player.new_item("golden key")
             starting_room = "spider_room"
         else:
-            print("Cheat code is unknown. Start from beginning...")
+            print("Cheat code is unknown. Start from beginning...\n")
 
     map = Map(GAME_ROOMS, ROOM_ADJACENCY)
     engine = Engine(player, map, "mephistopheles_lair")
