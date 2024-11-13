@@ -12,7 +12,7 @@ class DukesChamber1(Scene):
     def enter(self, player):
         print(self.dialogue["description"])
         # array of knights
-        knights = [Character(f"Knight {i}", 7, 7) for i in range(6)]
+        knights = [Character(f"Knight {i + 1}", 7, 7) for i in range(6)]
         elixir = True
 
         while knights:
@@ -22,7 +22,9 @@ class DukesChamber1(Scene):
                 death(self.dialogue["death"])
 
             print("What do you do?")
+            print("")
             move = filtered_input(["attack", "pass"])
+            print("")
 
             if move == "attack":
                 player.attack(knights[0])
@@ -226,7 +228,7 @@ class WizardsLab(Scene):
                     print("You already have the grimoire.")
             elif move == "open door":
                 if player.weapon == "sword" and "golden key" in player.inventory:
-                    return "mephistopholes_lair"
+                    return "mephistopheles_lair"
                 else:
                     print(
                         "You must have the sword and the golden key to open the door."
@@ -299,7 +301,7 @@ class MephistopholesLair(Scene):
                     player.hp = 50
                     player.use_item("elixir")
                 else:
-                    print("You do not have elixir.")
+                    print("You do not have an elixir.")
 
             elif move == "pass":
                 continue
@@ -309,6 +311,27 @@ class MephistopholesLair(Scene):
 
 
 class TreasureRoom(Scene):
+    manitcore = True
+    dialogue = DIALOGUE["treasure_room"]
+
     def enter(self, player):
-        print("TREASURE ROOM")
+        print(self.dialogue["description"])
+
+        choices = ["attack", "read from grimoire"]
+
+        while self.manitcore:
+            print("What do you do?")
+            move = filtered_input(choices)
+            print("")
+
+            if move == "attack":
+                death(self.dialogue["death"])
+            if move == "read from grimoire":
+                if "grimoire" in player.inventory:
+                    self.manitcore = False
+                    print(self.dialogue["victory"])
+                else:
+                    print("You do not have the grimoire.")
+        print(self.dialogue["game_won"])
+
         exit(0)

@@ -34,4 +34,10 @@ Fail and you will perish. What flies but does not have wings?\"""",
         "death": "Streak of fire are launched at your torso. Mephistopholes laughs maniacally.",
         "victory": "Mephistopholes explodes right before your eyes. A passage appears in the back.",
     },
+    "treasure_room": {
+        "description": "TREASURE ROOM",
+        "death": "Manticore swipes its poisonous tail at you, withering on the spot.",
+        "victory": "You chant a spell from the gilt grimoire. Manticore disappears in a quick flash of bright white light. The treasure is now yours to take.",
+        "game_won": "The tresure is now yours.",
+    },
 }

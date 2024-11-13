@@ -8,7 +8,7 @@ GAME_ROOMS = {
     "spider_room": SpiderRoom(),
     "wizards_lab": WizardsLab(),
     "sphinx": Sphinx(),
-    "mephistopholes_lair": MephistopholesLair(),
+    "mephistopheles_lair": MephistopholesLair(),
     "treasure_room": TreasureRoom(),
 }
 
@@ -17,7 +17,7 @@ ROOM_ADJACENCY = {
     "dukes_chamber_1": ["dukes_chamber_2"],
     "dukes_chamber_2": ["spider_room"],
     "spider_room": ["wizards_lab", "sphinx"],
-    "wizards_lab": ["mephistopholes_lair", "spider_room"],
-    "mephistopholes_lair": ["treasure_room"],
+    "wizards_lab": ["mephistopheles_lair", "spider_room"],
+    "mephistopheles_lair": ["treasure_room"],
     "sphinx": ["spider_room"],
 }
