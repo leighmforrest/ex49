@@ -19,7 +19,7 @@ def init_player():
 
 
 if __name__ == "__main__":
-    print("Welcome to Dark Castle")
+    print("\nWelcome to Dark Castle\n")
     starting_room = "dukes_chamber_1"
 
     player = init_player()

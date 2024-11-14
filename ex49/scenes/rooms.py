@@ -41,7 +41,7 @@ class DukesChamber1(Scene):
             if elixir:
                 print("There is a bottle of elixir at your foot.")
 
-            print("What do you do now?")
+            print("\nWhat do you do now?")
             move = filtered_input(["take elixir", "advance"])
 
             if move == "advance":
@@ -93,7 +93,7 @@ class DukesChamber2(Scene):
 
         while True:
             if golden_key:
-                print("The golden key is on the marble floor.")
+                print("The golden key is on the marble floor.\n")
             print("What is your next move?")
             move = filtered_input(["take key", "advance"])
 
@@ -131,9 +131,9 @@ class SpiderRoom(Scene):
             n = len(self.spiders)
 
             if n > 1:
-                spider_count = f"There are {n} spiders in the room."
+                spider_count = f"\nThere are {n} spiders in the room."
             else:
-                spider_count = "There is one spider in the room."
+                spider_count = "\nThere is one spider in the room."
             print(spider_count)
 
             # top spider always attacks
@@ -155,6 +155,7 @@ class SpiderRoom(Scene):
 
         # After defeating all spiders
         while True:
+            print("\n")
             print(self.dialogue["victory"])
             if self.stink_bomb:
                 print("There is a stink bomb on the floor.")
@@ -191,7 +192,7 @@ class WizardsLab(Scene):
             print(self.dialogue["wizard"])
 
         while not self.wizard_bombed:
-            print("What action will you take?")
+            print("\nWhat action will you take?")
             move = filtered_input(choices_1)
 
             if move == "attack":
@@ -211,7 +212,7 @@ class WizardsLab(Scene):
 
         while True:
             if self.grimoire:
-                print("The gilt grimoire is on the stand.")
+                print("\nThe gilt grimoire is on the stand.")
 
             print("What do you do now?")
             move = filtered_input(choices_2)
@@ -242,14 +243,15 @@ class Sphinx(Scene):
         max_guesses = 3
         answer = "time"
 
+        print(self.dialogue["description"])
+
         if self.solved:
             print("You have already solved the riddle.")
         else:
-            print(self.dialogue["description"])
             print(self.dialogue["sphinx_talk"])
 
             for _ in range(3):
-                print("What is your answer?")
+                print("\nWhat is your answer?")
                 guess = input("> ").lower()
                 if guess == answer:
                     self.solved = True
@@ -284,7 +286,7 @@ class MephistopholesLair(Scene):
             if not player.is_alive():
                 death(self.dialogue["death"])
 
-            print("What do you do?")
+            print("\nWhat do you do?")
             move = filtered_input(["attack", "pass", "drink elixir"])
 
             if move == "attack":
@@ -305,7 +307,7 @@ class MephistopholesLair(Scene):
             elif move == "pass":
                 continue
 
-        print(self.dialogue["victory"])
+        print("\n", self.dialogue["victory"])
         return "treasure_room"
 
 
