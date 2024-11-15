@@ -1,6 +1,10 @@
 from unittest.mock import patch
 
-from ex49.character import WEAPONS
+import pytest
+
+from ex49.character import ITEMS, WEAPONS
+
+BAD_ITEMS = ("Model 29", "slingshot", "blue")
 
 
 def test_character_exists(character):
@@ -66,3 +70,44 @@ def test_player_new_weapon_fail(player, capsys):
 
     assert "Weapon not found" in captured.out
     assert player.weapon != "shovel"
+
+
+@pytest.mark.parametrize("item", ITEMS)
+def test_new_item_success(player, item):
+    player.new_item(item)
+
+    assert item in player.inventory
+
+
+@pytest.mark.parametrize("item", BAD_ITEMS)
+def test_new_item_failure(capsys, player, item):
+    player.new_item(item)
+    captured = capsys.readouterr()
+
+    assert item not in player.inventory
+    assert "Item not found" in captured.out
+
+
+@pytest.mark.parametrize("item", ITEMS)
+def test_use_item_success(player, item):
+    player.new_item(item)
+    player.use_item(item)
+
+    assert item not in player.inventory
+
+
+@pytest.mark.parametrize("item", ITEMS)
+def test_use_item_success(player, item):
+    player.new_item(item)
+    player.use_item(item)
+
+    assert item not in player.inventory
+
+
+@pytest.mark.parametrize("item,bad_item", zip(ITEMS, BAD_ITEMS))
+def test_use_item_failure(player, item, bad_item):
+    print(item, bad_item)
+    player.new_item(item)
+    player.use_item(bad_item)
+
+    assert bad_item not in player.inventory

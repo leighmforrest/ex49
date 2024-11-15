@@ -1,4 +1,5 @@
-from test.scenes_for_testing import ADJACENT_SCENES, BAD_ADJACENT_SCENES, SCENES
+from test.scenes_for_testing import (ADJACENT_SCENES, BAD_ADJACENT_SCENES,
+                                     SCENES)
 
 import pytest
 
